@@ -1,9 +1,8 @@
 package ru.hogwarts.rick.school_hogwarts.service;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.rick.school_hogwarts.model.Student;
-import ru.hogwarts.rick.school_hogwarts.repoository.StudentRepository;
+import ru.hogwarts.rick.school_hogwarts.repository.StudentRepository;
 
 import java.util.Collection;
 
@@ -11,13 +10,12 @@ import java.util.Collection;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private  StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
-    public StudentServiceImpl(@Qualifier("studentRepository")StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
-    public StudentServiceImpl() {
-    }
+
     @Override
     public Student addStudent(Student student) {
         return studentRepository.save(student);

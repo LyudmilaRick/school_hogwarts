@@ -1,22 +1,20 @@
 package ru.hogwarts.rick.school_hogwarts.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.rick.school_hogwarts.model.Faculty;
-import ru.hogwarts.rick.school_hogwarts.repoository.FacultyRepository;
+import ru.hogwarts.rick.school_hogwarts.repository.FacultyRepository;
 
 import java.util.Collection;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
-    private FacultyRepository facultyRepository;
 
-    public FacultyServiceImpl(@Qualifier("facultyRepository")FacultyRepository facultyRepository) {
+    private final FacultyRepository facultyRepository;
+
+    public FacultyServiceImpl(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
-    public FacultyServiceImpl() {
-    }
+
     @Override
     public Faculty addFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
@@ -46,11 +44,10 @@ public class FacultyServiceImpl implements FacultyService {
     /**
      * Добавить фильтрацию факультетов по цвету.
      */
- //   @Override
- //   public Collection<Faculty> getFacultyByColor(String color) {
- //       return facultyRepository.getFacultyByColor(color);
- //   }
-
+    //   @Override
+    //   public Collection<Faculty> getFacultyByColor(String color) {
+    //       return facultyRepository.getFacultyByColor(color);
+    //   }
     @Override
     public Faculty setFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
