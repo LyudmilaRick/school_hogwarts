@@ -14,7 +14,7 @@ import java.util.Collection;
  * используя все правила формирования REST-запросов: GET-методы для получения данных, POST— для создания…
  */
 @RestController
-@RequestMapping("faculty")
+@RequestMapping("/faculty")
 public class FacultyController {
     private final FacultyService facultyService;
 
@@ -39,14 +39,14 @@ public class FacultyController {
      * Добавить фильтрацию факультетов по цвету.
      * GET http://localhost:8080/faculty/?color=green
      */
-    @GetMapping
-    public Collection<Faculty> getFacultyUseColor(@RequestParam("color") String color) {
-        Collection<Faculty> facultyUseColor = facultyService.getFacultyUseColor(color);
-        if (facultyUseColor.size() == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return facultyUseColor;
-    }
+  //  @GetMapping
+  //  public Collection<Faculty> getFacultyUseColor(@RequestParam("color") String color) {
+  //      Collection<Faculty> facultyByColor = facultyService.getFacultyByColor(color);
+  //      if (facultyByColor.size() == 0) {
+  //          throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+  //      }
+  //      return facultyByColor;
+  //  }
 
     /**
      * показать всех

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.hogwarts.rick.school_hogwarts.model.Student;
 
 import java.util.List;
-
+@Repository("studentRepository")
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    List<Student> getStudentUseAge(int age);
+ //   List<Student> getStudentByAge(int age);
 }

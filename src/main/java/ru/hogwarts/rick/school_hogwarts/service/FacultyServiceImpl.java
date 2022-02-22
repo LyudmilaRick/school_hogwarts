@@ -1,6 +1,7 @@
 package ru.hogwarts.rick.school_hogwarts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.rick.school_hogwarts.model.Faculty;
 import ru.hogwarts.rick.school_hogwarts.repoository.FacultyRepository;
@@ -11,7 +12,7 @@ import java.util.Collection;
 public class FacultyServiceImpl implements FacultyService {
     private FacultyRepository facultyRepository;
 
-    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+    public FacultyServiceImpl(@Qualifier("facultyRepository")FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
     public FacultyServiceImpl() {
@@ -44,14 +45,11 @@ public class FacultyServiceImpl implements FacultyService {
 
     /**
      * Добавить фильтрацию факультетов по цвету.
-     *
-     * @param color String
-     * @return Collection<Faculty>
      */
-    @Override
-    public Collection<Faculty> getFacultyUseColor(String color) {
-        return facultyRepository.getFacultyUseColor(color);
-    }
+ //   @Override
+ //   public Collection<Faculty> getFacultyByColor(String color) {
+ //       return facultyRepository.getFacultyByColor(color);
+ //   }
 
     @Override
     public Faculty setFaculty(Faculty faculty) {

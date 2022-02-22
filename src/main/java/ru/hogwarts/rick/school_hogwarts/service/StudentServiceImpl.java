@@ -10,14 +10,14 @@ import java.util.Collection;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+
     private  StudentRepository studentRepository;
 
-    public StudentServiceImpl( StudentRepository studentRepository) {
+    public StudentServiceImpl(@Qualifier("studentRepository")StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
     public StudentServiceImpl() {
     }
-
     @Override
     public Student addStudent(Student student) {
         return studentRepository.save(student);
@@ -33,10 +33,10 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findAll();
     }
 
-    @Override
-    public Collection<Student> getStudentUseAge(int age) {
-        return studentRepository.getStudentUseAge(age);
-    }
+  //  @Override
+//   public Collection<Student> getStudentByAge(int age) {
+ //       return studentRepository.getStudentByAge(age);
+ //   }
 
     @Override
     public Student setStudent(Student student) {

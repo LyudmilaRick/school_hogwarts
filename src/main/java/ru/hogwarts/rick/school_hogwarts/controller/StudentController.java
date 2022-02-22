@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.hogwarts.rick.school_hogwarts.model.Faculty;
 import ru.hogwarts.rick.school_hogwarts.model.Student;
 import ru.hogwarts.rick.school_hogwarts.service.StudentService;
 
@@ -15,7 +14,7 @@ import java.util.Collection;
  * используя все правила формирования REST-запросов: GET-методы для получения данных, POST— для создания…
  */
 @RestController
-@RequestMapping("student")
+@RequestMapping("/student")
 
 public class StudentController {
     private final StudentService studentService;
@@ -41,14 +40,14 @@ public class StudentController {
      * Добавить фильтрацию студентов по возрасту.
      * GET 'http://localhost:8080/student?age=1'
      */
-    @GetMapping
-    public Collection<Student> getStudentUseAge(@RequestParam("age") int age) {
-        Collection<Student> studentUseAge = studentService.getStudentUseAge(age);
-        if (studentUseAge.size() == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return studentUseAge;
-    }
+  //  @GetMapping
+  //  public Collection<Student> getStudentUseAge(@RequestParam("age") int age) {
+  //      Collection<Student> studentByAge= studentService.getStudentByAge(age);
+  //      if (studentByAge.size() == 0) {
+  //          throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+  //      }
+  //      return studentByAge;
+  //  }
 
     /**
      * показать всех
