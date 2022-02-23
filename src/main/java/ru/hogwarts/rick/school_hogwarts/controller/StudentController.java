@@ -40,14 +40,14 @@ public class StudentController {
      * Добавить фильтрацию студентов по возрасту.
      * GET 'http://localhost:8080/student?age=1'
      */
-  //  @GetMapping
-  //  public Collection<Student> getStudentUseAge(@RequestParam("age") int age) {
-  //      Collection<Student> studentByAge= studentService.getStudentByAge(age);
-  //      if (studentByAge.size() == 0) {
-  //          throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-  //      }
-  //      return studentByAge;
-  //  }
+    @GetMapping
+    public Collection<Student> getStudentUseAge(@RequestParam("age") int age) {
+        Collection<Student> studentByAge = studentService.getStudentByAge(age);
+        if (studentByAge.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return studentByAge;
+    }
 
     /**
      * показать всех
@@ -63,6 +63,7 @@ public class StudentController {
      */
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
+
         return studentService.addStudent(student);
     }
 

@@ -39,14 +39,14 @@ public class FacultyController {
      * Добавить фильтрацию факультетов по цвету.
      * GET http://localhost:8080/faculty/?color=green
      */
-  //  @GetMapping
-  //  public Collection<Faculty> getFacultyUseColor(@RequestParam("color") String color) {
-  //      Collection<Faculty> facultyByColor = facultyService.getFacultyByColor(color);
-  //      if (facultyByColor.size() == 0) {
-  //          throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-  //      }
-  //      return facultyByColor;
-  //  }
+    @GetMapping
+    public Collection<Faculty> getFacultyUseColor(@RequestParam("color") String color) {
+        Collection<Faculty> facultyByColor = facultyService.getFacultyByColor(color);
+        if (facultyByColor.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return facultyByColor;
+    }
 
     /**
      * показать всех
