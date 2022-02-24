@@ -1,9 +1,7 @@
 package ru.hogwarts.rick.school_hogwarts.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import ru.hogwarts.rick.school_hogwarts.model.Student;
 import ru.hogwarts.rick.school_hogwarts.service.StudentService;
 
@@ -29,41 +27,29 @@ public class StudentController {
      */
     @GetMapping("{id}")
     public Student getStudent(@PathVariable long id) {
-        Student student = studentService.getStudent(id);
-        if (student == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return student;
+        return studentService.getStudent(id);
     }
 
     /**
      * Добавить фильтрацию студентов по возрасту.
      * GET 'http://localhost:8080/student?age=1'
+     * если возраст не задан - показать всех
      */
     @GetMapping
-    public Collection<Student> getStudentUseAge(@RequestParam("age") int age) {
-        Collection<Student> studentByAge = studentService.getStudentByAge(age);
-        if (studentByAge.size() == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    public Collection<Student> getStudentByAge(@RequestParam(required = false) Integer age) {
+        if (age != null) {
+            return studentService.getStudentByAge(age);
+        } else {
+            return studentService.getAllStudents();
         }
-        return studentByAge;
     }
 
-    /**
-     * показать всех
-     * GET http://localhost:8080/student/all
-     */
-    @GetMapping("/all")
-    public Collection<Student> getAllStudents() {
-        return studentService.getAllStudents();
-    }
 
     /**
      * POST http://localhost:8080/student
      */
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
-
         return studentService.addStudent(student);
     }
 
@@ -72,11 +58,7 @@ public class StudentController {
      */
     @PutMapping
     public Student updateStudent(@RequestBody Student student) {
-        Student studentForUpdate = studentService.setStudent(student);
-        if (studentForUpdate == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return studentForUpdate;
+        return studentService.setStudent(student);
     }
 
     /**

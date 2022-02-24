@@ -1,6 +1,9 @@
 package ru.hogwarts.rick.school_hogwarts.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import ru.hogwarts.rick.school_hogwarts.excepton.IdNotFoundException;
 import ru.hogwarts.rick.school_hogwarts.model.Faculty;
 import ru.hogwarts.rick.school_hogwarts.repository.FacultyRepository;
 
@@ -16,7 +19,6 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty addFaculty(Faculty faculty) {
-
         return facultyRepository.save(faculty);
     }
 
@@ -28,7 +30,8 @@ public class FacultyServiceImpl implements FacultyService {
      */
     @Override
     public Faculty getFaculty(Long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("Информация по идентификатору не найдена" + id));
     }
 
     /**
@@ -38,7 +41,11 @@ public class FacultyServiceImpl implements FacultyService {
      */
     @Override
     public Collection<Faculty> getAllFaculties() {
-        return facultyRepository.findAll();
+        Collection<Faculty> faculties = facultyRepository.findAll();
+        if (faculties.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return faculties;
     }
 
     /**
@@ -46,7 +53,11 @@ public class FacultyServiceImpl implements FacultyService {
      */
     @Override
     public Collection<Faculty> getFacultyByColor(String color) {
-        return facultyRepository.getFacultyByColor(color);
+        Collection<Faculty> facultyByColor = facultyRepository.getFacultyByColor(color);
+        if (facultyByColor.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return facultyByColor;
     }
 
     @Override

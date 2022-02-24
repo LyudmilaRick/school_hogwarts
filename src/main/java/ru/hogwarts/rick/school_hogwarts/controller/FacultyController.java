@@ -28,38 +28,24 @@ public class FacultyController {
      */
     @GetMapping("{id}")
     public Faculty getFaculty(@PathVariable long id) {
-        Faculty faculty = facultyService.getFaculty(id);
-        if (faculty == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return faculty;
+        return facultyService.getFaculty(id);
     }
 
     /**
      * Добавить фильтрацию факультетов по цвету.
      * GET http://localhost:8080/faculty/?color=green
+     * * показать всех - если не задан цвет
+     * * GET http://localhost:8080/faculty
      */
     @GetMapping
-    public Collection<Faculty> getFacultyUseColor(@RequestParam("color") String color) {
-        Collection<Faculty> facultyByColor = facultyService.getFacultyByColor(color);
-        if (facultyByColor.size() == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    public Collection<Faculty> getFacultyByColor(@RequestParam(required = false) String color) {
+        if (color != null && !color.isBlank()) {
+            return facultyService.getFacultyByColor(color);
+        } else {
+            return facultyService.getAllFaculties();
         }
-        return facultyByColor;
     }
 
-    /**
-     * показать всех
-     * GET http://localhost:8080//all
-     */
-    @GetMapping("/all")
-    public ResponseEntity<Collection<Faculty>> getAllFaculties() {
-        return ResponseEntity.ok(facultyService.getAllFaculties());
-    }
-
-    /**
-     * POST http://localhost:8080/faculty
-     */
     @PostMapping
     public Faculty createFaculty(@RequestBody Faculty faculty) {
         return facultyService.addFaculty(faculty);
@@ -70,12 +56,7 @@ public class FacultyController {
      */
     @PutMapping
     public Faculty updateFaculty(@RequestBody Faculty faculty) {
-        Faculty facultyForUpdate = facultyService.setFaculty(faculty);
-        if (facultyForUpdate == null) {
-
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return facultyForUpdate;
+        return facultyService.setFaculty(faculty);
     }
 
     /**
