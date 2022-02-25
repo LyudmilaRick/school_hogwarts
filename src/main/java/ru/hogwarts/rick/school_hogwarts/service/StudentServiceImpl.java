@@ -48,6 +48,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Collection<Student> getStudentByAgeBetween(int ageMin, int ageMax) {
+        Collection<Student> studentByAgeBetween = studentRepository.getStudentByAgeBetween(ageMin, ageMax);
+        if (studentByAgeBetween.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return studentByAgeBetween;
+    }
+
+    @Override
     public Student setStudent(Student student) {
         return studentRepository.save(student);
     }

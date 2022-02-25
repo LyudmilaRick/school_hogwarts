@@ -69,5 +69,15 @@ public class FacultyServiceImpl implements FacultyService {
     public void removeFaculty(Long id) {
         facultyRepository.deleteById(id);
     }
+
+    @Override
+    public Collection<Faculty> getFacultiesByNameIgnoreCase(String name) {
+        Collection<Faculty> facultyByName = facultyRepository.getFacultiesByNameIgnoreCase(name);
+        if (facultyByName.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return facultyByName;
+    }
 }
+
 
