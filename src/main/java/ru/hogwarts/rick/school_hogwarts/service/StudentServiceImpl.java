@@ -39,7 +39,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Collection<Student> getStudentByAge(int age) {
+    public Collection<Student> getStudentsByAge(int age) {
         Collection<Student> studentByAge = studentRepository.getStudentByAge(age);
         if (studentByAge.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -48,8 +48,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Collection<Student> getStudentByAgeBetween(int ageMin, int ageMax) {
-        Collection<Student> studentByAgeBetween = studentRepository.getStudentByAgeBetween(ageMin, ageMax);
+    public Collection<Student> getStudentsByAgeBetween(int min, int max) {
+        Collection<Student> studentByAgeBetween = studentRepository.getStudentByAgeBetween(min, max);
         if (studentByAgeBetween.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
