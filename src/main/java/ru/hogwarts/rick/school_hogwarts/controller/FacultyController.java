@@ -33,17 +33,21 @@ public class FacultyController {
 
     /**
      * Добавить фильтрацию факультетов по цвету.
+     * Добавить эндпоинт для поиска факультета по имени
      * GET http://localhost:8080/faculty/?color=green
      * * показать всех - если не задан цвет
      * * GET http://localhost:8080/faculty
      */
     @GetMapping
-    public Collection<Faculty> getFacultyByColor(@RequestParam(required = false) String color) {
+    public Collection<Faculty> getFacultyByColor(@RequestParam(required = false) String color,
+                                                 @RequestParam(required = false) String name) {
         if (color != null && !color.isBlank()) {
             return facultyService.getFacultyByColor(color);
-        } else {
-            return facultyService.getAllFaculties();
         }
+        if (name != null && !name.isBlank()) {
+            return facultyService.getFacultiesByNameIgnoreCase(name);
+        }
+        return facultyService.getAllFaculties();
     }
 
     @PostMapping

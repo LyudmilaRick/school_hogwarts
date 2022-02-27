@@ -1,9 +1,7 @@
 package ru.hogwarts.rick.school_hogwarts.model;
 
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Класс Student имеет следующие поля: Long id, String name, int age.
@@ -20,6 +18,10 @@ public class Student {
 
     private String name;
     private int age;
+
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
 
     public Student(Long id, String name, int age) {
         this.id = id;

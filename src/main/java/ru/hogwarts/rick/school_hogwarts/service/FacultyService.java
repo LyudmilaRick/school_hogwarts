@@ -16,4 +16,7 @@ public interface FacultyService {
     Faculty setFaculty(Faculty faculty);
 
     void removeFaculty(Long id);
+
+    Collection<Faculty> getFacultiesByNameIgnoreCase(String name);
+
 }
