@@ -36,13 +36,13 @@ public class StudentController {
      * если возраст не задан - показать всех
      */
     @GetMapping
-    public Collection<Student> getStudentByAge(@RequestParam(required = false) Integer ageMin,
-                                               @RequestParam(required = false) Integer ageMax) {
-        if (ageMin != null && ageMax == null) {
-            return studentService.getStudentByAge(ageMin);
+    public Collection<Student> getStudentByAge(@RequestParam(required = false) Integer min,
+                                               @RequestParam(required = false) Integer max) {
+        if (min != null && max == null) {
+            return studentService.getStudentsByAge(min);
         }
-        if (ageMin != null && ageMax != null) {
-            return studentService.getStudentByAgeBetween(ageMin, ageMax);
+        if (min != null && max != null) {
+            return studentService.getStudentsByAgeBetween(min, max);
         }
         return studentService.getAllStudents();
     }

@@ -11,9 +11,9 @@ public interface StudentService {
 
     Collection<Student> getAllStudents();
 
-    Collection<Student> getStudentByAge(int age);
+    Collection<Student> getStudentsByAge(int age);
 
-    Collection<Student> getStudentByAgeBetween(int ageMin, int ageMax);
+    Collection<Student> getStudentsByAgeBetween(int min, int max);
 
     Student setStudent(Student student);
 
