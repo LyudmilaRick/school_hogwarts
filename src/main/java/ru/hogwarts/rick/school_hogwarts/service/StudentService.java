@@ -18,4 +18,10 @@ public interface StudentService {
     Student setStudent(Student student);
 
     void removeStudent(Long id);
+
+    Integer CountOfAllStudent();
+
+    Float getAverageAge();
+
+    Collection<Student> getLastStudents(Integer num);
 }

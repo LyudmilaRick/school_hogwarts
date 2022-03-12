@@ -48,6 +48,35 @@ public class StudentController {
     }
 
     /**
+     * Возможность получить количество всех студентов в школе.
+     * Эндпоинт должен вернуть число.
+     */
+    @GetMapping("/count-all")
+    public Integer CountOfAllStudents() {
+        return studentService.CountOfAllStudent();
+    }
+
+    /**
+     * Возможность получить средний возраст студентов.
+     *
+     * @return Эндпоинт должен вернуть число.
+     */
+    @GetMapping("/average-age")
+    public Float getAverageAge() {
+        return studentService.getAverageAge();
+    }
+
+    /**
+     * Возможность получать только пять последних студентов.
+     *
+     * @return Последние студенты считаются теми, у кого идентификатор больше других.Эндпоинт должен вернуть число.
+     */
+    @GetMapping("/last-students")
+    public Collection<Student> getLastStudents(@RequestParam Integer num) {
+        return studentService.getLastStudents(num);
+    }
+
+    /**
      * POST http://localhost:8080/student
      */
     @PostMapping

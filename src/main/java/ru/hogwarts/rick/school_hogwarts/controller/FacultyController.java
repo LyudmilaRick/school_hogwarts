@@ -1,9 +1,7 @@
 package ru.hogwarts.rick.school_hogwarts.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import ru.hogwarts.rick.school_hogwarts.model.Faculty;
 import ru.hogwarts.rick.school_hogwarts.service.FacultyService;
 
@@ -37,17 +35,23 @@ public class FacultyController {
      * GET http://localhost:8080/faculty/?color=green
      * * показать всех - если не задан цвет
      * * GET http://localhost:8080/faculty
+     *
+     * Добавьте пагинацию для репозитория и контроллера,
+     * чтобы можно было получать списки постранично.
      */
     @GetMapping
     public Collection<Faculty> getFacultyByColor(@RequestParam(required = false) String color,
-                                                 @RequestParam(required = false) String name) {
+                                                 @RequestParam(required = false) String name,
+                                                 @RequestParam("page") Integer pageNumber,
+                                                 @RequestParam("size") Integer pageSize
+    ) {
         if (color != null && !color.isBlank()) {
             return facultyService.getFacultyByColor(color);
         }
         if (name != null && !name.isBlank()) {
             return facultyService.getFacultiesByNameIgnoreCase(name);
         }
-        return facultyService.getAllFaculties();
+        return facultyService.getAllFaculties(pageNumber, pageSize);
     }
 
     @PostMapping

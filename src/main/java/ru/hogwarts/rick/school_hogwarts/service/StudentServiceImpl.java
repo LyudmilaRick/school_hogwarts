@@ -65,5 +65,41 @@ public class StudentServiceImpl implements StudentService {
     public void removeStudent(Long id) {
         studentRepository.deleteById(id);
     }
+
+    /**
+     * Возможность получить количество всех студентов в школе
+     *
+     * @return Integer  getCountOfAllStudents
+     */
+    @Override
+    public Integer CountOfAllStudent() {
+        return studentRepository.getCountOfAllStudents();
+    }
+
+    /**
+     * Возможность получить средний возраст студентов
+     *
+     * @return Float getAverageAge()
+     */
+    @Override
+    public Float getAverageAge() {
+        return studentRepository.getAverageAge();
+    }
+
+    /**
+     * Возможность получать только пять последних студентов
+     * Последние студенты считаются теми, у кого идентификатор больше других.
+     *
+     * @param num пять
+     * @return только пять последних студентов
+     */
+    @Override
+    public Collection<Student> getLastStudents(Integer num) {
+        Collection<Student> lastStudents = studentRepository.getLastStudents(num);
+        if (lastStudents.size() != num) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return lastStudents;
+    }
 }
 
