@@ -51,9 +51,9 @@ public class StudentController {
      * Возможность получить количество всех студентов в школе.
      * Эндпоинт должен вернуть число.
      */
-    @GetMapping("/count-all")
-    public Integer CountOfAllStudents() {
-        return studentService.CountOfAllStudent();
+    @GetMapping("/amount")
+    public Integer countOfAllStudents() {
+        return studentService.countOfAllStudent();
     }
 
     /**

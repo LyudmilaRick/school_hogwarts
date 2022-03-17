@@ -72,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
      * @return Integer  getCountOfAllStudents
      */
     @Override
-    public Integer CountOfAllStudent() {
+    public Integer countOfAllStudent() {
         return studentRepository.getCountOfAllStudents();
     }
 

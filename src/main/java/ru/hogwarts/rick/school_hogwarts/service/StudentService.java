@@ -19,7 +19,7 @@ public interface StudentService {
 
     void removeStudent(Long id);
 
-    Integer CountOfAllStudent();
+    Integer countOfAllStudent();
 
     Float getAverageAge();
 
