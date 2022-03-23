@@ -1,6 +1,5 @@
 package ru.hogwarts.rick.school_hogwarts;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,8 @@ import ru.hogwarts.rick.school_hogwarts.controller.StudentController;
 import ru.hogwarts.rick.school_hogwarts.model.Student;
 
 import java.util.Collection;
-
+// Для Assertions стоит сделать статик импорт.
+import static org.assertj.core.api.Assertions.*;
 import static ru.hogwarts.rick.school_hogwarts.constants.ConstantsForTest.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -38,7 +38,7 @@ public class StudentControllerTests {
 
     @Test
     void contextLoads() throws Exception {
-        Assertions.assertThat(studentController).isNotNull();
+        assertThat(studentController).isNotNull();
     }
 
 //  public Student getStudent(@PathVariable long id)
@@ -53,7 +53,7 @@ public class StudentControllerTests {
         idTestStudent = restTemplate.postForObject(getUrl(), testStudent, Student.class).getId();
         testStudent.setId(idTestStudent);
 
-        Assertions.assertThat(this.restTemplate.getForObject(getUrl() + idTestStudent, Student.class))
+        assertThat(restTemplate.getForObject(getUrl() + idTestStudent, Student.class))
                 .isEqualTo(testStudent);
 
     }
@@ -61,18 +61,18 @@ public class StudentControllerTests {
     @Test
     void getAllStudentTest() throws Exception {
         //GET http://localhost:8080/student/
-        Assertions.assertThat(this.restTemplate.getForObject(getUrl(), Collection.class))
+        assertThat(restTemplate.getForObject(getUrl(), Collection.class))
                 .isNotEmpty();
-        Assertions.assertThat(this.restTemplate.getForObject(getUrl(), Collection.class))
+        assertThat(restTemplate.getForObject(getUrl(), Collection.class))
                 .hasSizeGreaterThanOrEqualTo(1);
-        Assertions.assertThat(this.restTemplate.getForObject(getUrl(), Collection.class).toString())
+        assertThat(restTemplate.getForObject(getUrl(), Collection.class).toString())
                 .contains(testStudent.getName());
     }
 
     @Test
     void createStudentTest() throws Exception {
         // POST http://localhost:8080/student
-        Assertions.assertThat(this.restTemplate.postForObject(getUrl(), testStudent, String.class))
+        assertThat(restTemplate.postForObject(getUrl(), testStudent, String.class))
                 .isNotNull();
 
     }
@@ -83,12 +83,12 @@ public class StudentControllerTests {
         idTestStudent = restTemplate.postForObject(getUrl(), testStudent, Student.class).getId();
         testStudent.setId(idTestStudent);
 
-        Assertions.assertThat(this.restTemplate.getForObject(getUrl() + idTestStudent, Student.class))
+        assertThat(restTemplate.getForObject(getUrl() + idTestStudent, Student.class))
                 .isEqualTo(testStudent);
 
         restTemplate.delete(getUrl() + idTestStudent);
         ResponseEntity<Student> empty = restTemplate.getForEntity(getUrl() + idTestStudent, Student.class);
-        Assertions.assertThat(empty.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(empty.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
     }
 
@@ -101,7 +101,7 @@ public class StudentControllerTests {
 
         restTemplate.put(getUrl(), testStudent);
 
-        Assertions.assertThat(this.restTemplate.getForObject(getUrl() + ID_1, Student.class))
+        assertThat(restTemplate.getForObject(getUrl() + ID_1, Student.class))
                 .isEqualTo(STUDENT_1);
 
     }
@@ -109,7 +109,7 @@ public class StudentControllerTests {
     @Test
     void getStudentByAgeTest() throws Exception {
         //GET http://localhost:8080/student/55
-        Assertions.assertThat(this.restTemplate.getForObject(getUrl() + "?age=" + AGE_1, Collection.class))
+        assertThat(this.restTemplate.getForObject(getUrl() + "?age=" + AGE_1, Collection.class))
                 .isNotNull();
     }
 

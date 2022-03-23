@@ -1,5 +1,6 @@
 package ru.hogwarts.rick.school_hogwarts.service;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,8 +41,9 @@ public class FacultyServiceImpl implements FacultyService {
      * @return Collection<Faculty>
      */
     @Override
-    public Collection<Faculty> getAllFaculties() {
-        Collection<Faculty> faculties = facultyRepository.findAll();
+    public Collection<Faculty> getAllFaculties(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        Collection<Faculty> faculties = facultyRepository.findAll(pageRequest).getContent();
         if (faculties.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
