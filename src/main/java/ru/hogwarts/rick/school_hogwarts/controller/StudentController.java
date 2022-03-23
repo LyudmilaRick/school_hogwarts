@@ -52,8 +52,8 @@ public class StudentController {
      * Эндпоинт должен вернуть число.
      */
     @GetMapping("/amount")
-    public Integer countOfAllStudents() {
-        return studentService.countOfAllStudent();
+    public Integer getStudentAmount() {
+        return studentService.getStudentAmount();
     }
 
     /**
@@ -62,7 +62,7 @@ public class StudentController {
      * @return Эндпоинт должен вернуть число.
      */
     @GetMapping("/average-age")
-    public Float getAverageAge() {
+    public float getAverageAge() {
         return studentService.getAverageAge();
     }
 

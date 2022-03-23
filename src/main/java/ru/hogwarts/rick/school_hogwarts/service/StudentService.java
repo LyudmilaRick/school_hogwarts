@@ -19,9 +19,9 @@ public interface StudentService {
 
     void removeStudent(Long id);
 
-    Integer countOfAllStudent();
+    Integer getStudentAmount();
 
-    Float getAverageAge();
+    float getAverageAge();
 
     Collection<Student> getLastStudents(Integer num);
 }

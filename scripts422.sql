@@ -3,10 +3,11 @@
 -- У каждого человека есть имя, возраст и признак того, что у него есть права (или их нет)
 -- У каждой машины есть марка, модель и стоимость
 
-CREATE TABLE persons
+CREATE TABLE people
 (
-    name         varchar PRIMARY KEY,
-    age          INTEGER PRIMARY KEY,
+    id_person    INTEGER PRIMARY KEY,
+    name         varchar NOT NULL,
+    age          INTEGER NOT NULL,
     flag_license BOOLEAN,
     id_car       INTEGER REFERENCES cars (id_car)
 );
@@ -21,5 +22,5 @@ CREATE TABLE cars_price
 (
     trade varchar(20) PRIMARY KEY,
     model varchar(20) PRIMARY KEY,
-    price money not null
+    price money NOT NULL
 );

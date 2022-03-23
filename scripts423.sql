@@ -8,4 +8,4 @@ LEFT JOIN faculty as f on s.faculty_id = f.id
 -- чтобы получить только тех студентов, у которых есть аватарки.
 SELECT student.name
 FROM avatar
-INNER JOIN student on avatar.id = student_id
+JOIN student on avatar.id = student_id
