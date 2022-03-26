@@ -1,5 +1,7 @@
 package ru.hogwarts.rick.school_hogwarts.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.Collection;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
+
+    Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     private final FacultyRepository facultyRepository;
 
     public FacultyServiceImpl(FacultyRepository facultyRepository) {
@@ -31,6 +35,7 @@ public class FacultyServiceImpl implements FacultyService {
      */
     @Override
     public Faculty getFaculty(Long id) {
+        logger.info("Method was called - getFaculty");
         return facultyRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundException("Информация по идентификатору не найдена" + id));
     }
@@ -42,9 +47,11 @@ public class FacultyServiceImpl implements FacultyService {
      */
     @Override
     public Collection<Faculty> getAllFaculties(int pageNumber, int pageSize) {
+        logger.info("Method was called - getAllFaculties");
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         Collection<Faculty> faculties = facultyRepository.findAll(pageRequest).getContent();
         if (faculties.size() == 0) {
+            logger.warn("Method was stopped - getAllFaculties");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return faculties;
@@ -55,8 +62,10 @@ public class FacultyServiceImpl implements FacultyService {
      */
     @Override
     public Collection<Faculty> getFacultyByColor(String color) {
+        logger.info("Method was called - getFacultyByColor");
         Collection<Faculty> facultyByColor = facultyRepository.getFacultyByColor(color);
         if (facultyByColor.size() == 0) {
+            logger.warn("Color was not founded - " + color);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return facultyByColor;
@@ -64,18 +73,22 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty setFaculty(Faculty faculty) {
+        logger.info("Method was called - setFaculty");
         return facultyRepository.save(faculty);
     }
 
     @Override
     public void removeFaculty(Long id) {
+        logger.info("Method was called - removeFaculty");
         facultyRepository.deleteById(id);
     }
 
     @Override
     public Collection<Faculty> getFacultiesByNameIgnoreCase(String name) {
+        logger.info("Method was called - getFacultiesByNameIgnoreCase");
         Collection<Faculty> facultyByName = facultyRepository.getFacultiesByNameIgnoreCase(name);
         if (facultyByName.size() == 0) {
+            logger.warn("Name was not founded - " + name);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return facultyByName;
