@@ -41,7 +41,7 @@ public class FacultyServiceImpl implements FacultyService {
      * @return Collection<Faculty>
      */
     @Override
-    public Collection<Faculty> getAllFaculties(Integer pageNumber, Integer pageSize) {
+    public Collection<Faculty> getAllFaculties(int pageNumber, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         Collection<Faculty> faculties = facultyRepository.findAll(pageRequest).getContent();
         if (faculties.size() == 0) {

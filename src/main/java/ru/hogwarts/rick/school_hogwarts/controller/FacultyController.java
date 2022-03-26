@@ -42,8 +42,8 @@ public class FacultyController {
     @GetMapping
     public Collection<Faculty> getFacultyByColor(@RequestParam(required = false) String color,
                                                  @RequestParam(required = false) String name,
-                                                 @RequestParam("page") Integer pageNumber,
-                                                 @RequestParam("size") Integer pageSize
+                                                 @RequestParam("page") int pageNumber,
+                                                 @RequestParam("size") int pageSize
     ) {
         if (color != null && !color.isBlank()) {
             return facultyService.getFacultyByColor(color);

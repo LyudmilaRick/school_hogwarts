@@ -72,8 +72,8 @@ public class StudentServiceImpl implements StudentService {
      * @return Integer  getCountOfAllStudents
      */
     @Override
-    public Integer countOfAllStudent() {
-        return studentRepository.getCountOfAllStudents();
+    public Integer getStudentAmount() {
+        return studentRepository.getStudentAmount();
     }
 
     /**
@@ -82,7 +82,7 @@ public class StudentServiceImpl implements StudentService {
      * @return Float getAverageAge()
      */
     @Override
-    public Float getAverageAge() {
+    public float getAverageAge() {
         return studentRepository.getAverageAge();
     }
 

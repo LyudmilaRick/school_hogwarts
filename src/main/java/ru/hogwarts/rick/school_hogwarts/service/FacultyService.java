@@ -9,7 +9,7 @@ public interface FacultyService {
 
     Faculty getFaculty(Long id);
 
-    Collection<Faculty> getAllFaculties(Integer pageNumber, Integer pageSize);
+    Collection<Faculty> getAllFaculties(int pageNumber, int pageSize);
 
     Collection<Faculty> getFacultyByColor(String color);
 

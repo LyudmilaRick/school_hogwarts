@@ -12,14 +12,8 @@ import java.util.List;
  * чтобы можно было получать списки постранично.
  */
 @Repository
-public interface FacultyRepository extends PagingAndSortingRepository<Faculty, Long> {
+public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     List<Faculty> getFacultyByColor(String color);
     List<Faculty> getFacultiesByNameIgnoreCase(String name);
 }
-
-
-//public interface FacultyRepository extends JpaRepository<Faculty, Long> {
-//    List<Faculty> getFacultyByColor(String color);
-//    List<Faculty> getFacultiesByNameIgnoreCase(String name);
-//}
 
