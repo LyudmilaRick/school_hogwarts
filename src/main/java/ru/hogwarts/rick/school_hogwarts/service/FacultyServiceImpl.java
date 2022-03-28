@@ -11,11 +11,13 @@ import ru.hogwarts.rick.school_hogwarts.model.Faculty;
 import ru.hogwarts.rick.school_hogwarts.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
 
-    Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(FacultyServiceImpl.class);
     private final FacultyRepository facultyRepository;
 
     public FacultyServiceImpl(FacultyRepository facultyRepository) {
@@ -92,6 +94,30 @@ public class FacultyServiceImpl implements FacultyService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return facultyByName;
+    }
+
+    /**
+     * Создать эндпоинт, который будет возвращать самое длинное название факультета
+     *
+     * @return List<Faculty> - может быть несколько записей, поэтому верну List
+     * первый проход - найти  максимальную длину
+     * второй - вывести всех с этой длиной - можно распараллелить
+     */
+    @Override
+    public List<Faculty> getMaxFacultiesName() {
+        logger.info("Method was called - getMaxFacultiesName");
+        // можно распараллетиь подсчет длины
+        int lenName = facultyRepository.findAll().stream()
+                .parallel()
+                .mapToInt(p -> p.getName().length())
+                .max().getAsInt();
+        logger.info("Length was found - " + lenName);
+        // можно распараллелить поиск
+        return facultyRepository.findAll().stream()
+                .parallel()
+                .filter(p -> p.getName().length() == lenName)
+                .collect(Collectors.toList())
+                ;
     }
 }
 

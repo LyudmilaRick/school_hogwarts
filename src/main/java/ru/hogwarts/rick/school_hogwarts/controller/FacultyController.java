@@ -6,6 +6,7 @@ import ru.hogwarts.rick.school_hogwarts.model.Faculty;
 import ru.hogwarts.rick.school_hogwarts.service.FacultyService;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 3. В каждом контроллере реализовать эндпоинты для создания, получения, изменения и удаления сущностей,
@@ -35,7 +36,7 @@ public class FacultyController {
      * GET http://localhost:8080/faculty/?color=green
      * * показать всех - если не задан цвет
      * * GET http://localhost:8080/faculty
-     *
+     * <p>
      * Добавьте пагинацию для репозитория и контроллера,
      * чтобы можно было получать списки постранично.
      */
@@ -74,5 +75,14 @@ public class FacultyController {
     public ResponseEntity deleteFaculty(@PathVariable long id) {
         facultyService.removeFaculty(id);
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Создать эндпоинт, который будет возвращать самое длинное название факультета
+     * DELETE  http://localhost:8080/faculty/max-lengh
+     */
+    @GetMapping("/max-lengh")
+    public List<Faculty> getMaxFacultiesName() {
+        return facultyService.getMaxFacultiesName();
     }
 }

@@ -6,6 +6,7 @@ import ru.hogwarts.rick.school_hogwarts.model.Student;
 import ru.hogwarts.rick.school_hogwarts.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 3. В каждом контроллере реализовать эндпоинты для создания, получения, изменения и удаления сущностей,
@@ -62,7 +63,7 @@ public class StudentController {
      * @return Эндпоинт должен вернуть число.
      */
     @GetMapping("/average-age")
-    public float getAverageAge() {
+    public Double getAverageAge() {
         return studentService.getAverageAge();
     }
 
@@ -101,4 +102,27 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Добавить эндпоинт для получения всех имен всех студентов,
+     * чье имя начинается с буквы А.
+     * В ответе должен находиться отсортированный в алфавитном порядке список с именами в верхнем регистре.
+     * Для получения всех студентов из базы использовать метод репозитория - findAll().
+     * GET 'http://localhost:8080/student/name-letter/A'
+     *
+     * @return Collection<Student>
+     */
+    @GetMapping("/name-letter/{letter}")
+    public List<String> getLetterStudents(@PathVariable String letter) {
+        return studentService.getLetterStudents(letter);
+    }
+
+    /**
+     * Создать эндпоинт (не важно в каком контроллере),
+     * который будет возвращать целочисленное значение.
+     * Это значение вычисляется следующей формулой
+     */
+    @GetMapping("/test-time")
+    public int getTestValue() {
+        return studentService.getTestValue();
+    }
 }

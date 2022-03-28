@@ -10,6 +10,10 @@ import ru.hogwarts.rick.school_hogwarts.model.Student;
 import ru.hogwarts.rick.school_hogwarts.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -92,14 +96,20 @@ public class StudentServiceImpl implements StudentService {
 
     /**
      * Возможность получить средний возраст студентов
+     * метод переписан, так как в задание указано
+     * Для получения информации о всех студентах  следует использовать метод репозитория - findAll().
      *
      * @return Float getAverageAge()
      */
     @Override
-    public float getAverageAge() {
+    public Double getAverageAge() {
         logger.info("Method was called - getAverageAge");
-        return studentRepository.getAverageAge();
+        return studentRepository.findAll().stream()
+                .collect(Collectors.averagingDouble(Student::getAge))
+                ;
+        //    return studentRepository.getAverageAge();
     }
+
 
     /**
      * Возможность получать только пять последних студентов
@@ -117,6 +127,50 @@ public class StudentServiceImpl implements StudentService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return lastStudents;
+    }
+
+    /**
+     * Добавить эндпоинт для получения всех имен всех студентов,
+     * чье имя начинается с буквы А.
+     * В ответе должен находиться отсортированный в алфавитном порядке список с именами в верхнем регистре.
+     * Для получения всех студентов из базы использовать метод репозитория - findAll().
+     *
+     * @return Collection<Student>
+     */
+    @Override
+    public List<String> getLetterStudents(String letter) {
+        logger.info("Method was called - getLetterStudents");
+        return studentRepository.findAll().stream()
+                .filter(p -> p.getName().startsWith(letter))
+                .sorted(Comparator.comparing(Student::getName))
+                .map(p -> p.getName().toUpperCase())
+                .collect(Collectors.toList())
+                ;
+    }
+
+    /**
+     * Создать эндпоинт (не важно в каком контроллере),
+     * который будет возвращать целочисленное значение.
+     * Это значение вычисляется следующей формулой
+     *
+     * @return int
+     */
+    @Override
+    public int getTestValue() {
+        long startTime = System.currentTimeMillis();
+        int sum = Stream.iterate(1, a -> a + 1).limit(1_000_000).reduce(0, (a, b) -> a + b);
+        long finishTime = System.currentTimeMillis() - startTime;
+        logger.info("Time before upgrading - " + finishTime);
+
+        startTime = System.currentTimeMillis();
+        sum = Stream.iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .parallel()
+                .reduce(0, (a, b) -> a + b);
+        finishTime = System.currentTimeMillis() - startTime;
+        logger.info("Time after upgrading - " + finishTime);
+
+        return sum;
     }
 }
 
