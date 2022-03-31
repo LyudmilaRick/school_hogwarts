@@ -107,13 +107,15 @@ public class FacultyServiceImpl implements FacultyService {
     public List<Faculty> getMaxFacultiesName() {
         logger.info("Method was called - getMaxFacultiesName");
         // можно распараллетиь подсчет длины
-        int lenName = facultyRepository.findAll().stream()
+        int lenName = facultyRepository.findAll()
+                .stream()
                 .parallel()
                 .mapToInt(p -> p.getName().length())
                 .max().getAsInt();
         logger.info("Length was found - " + lenName);
         // можно распараллелить поиск
-        return facultyRepository.findAll().stream()
+        return facultyRepository.findAll()
+                .stream()
                 .parallel()
                 .filter(p -> p.getName().length() == lenName)
                 .collect(Collectors.toList())

@@ -138,9 +138,10 @@ public class StudentServiceImpl implements StudentService {
      * @return Collection<Student>
      */
     @Override
-    public List<String> getLetterStudents(String letter) {
+    public List<String> findAllStartsWith(String letter) {
         logger.info("Method was called - getLetterStudents");
-        return studentRepository.findAll().stream()
+        return studentRepository.findAll()
+                .stream()
                 .filter(p -> p.getName().startsWith(letter))
                 .sorted(Comparator.comparing(Student::getName))
                 .map(p -> p.getName().toUpperCase())

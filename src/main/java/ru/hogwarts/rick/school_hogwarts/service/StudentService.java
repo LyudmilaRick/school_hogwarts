@@ -26,7 +26,7 @@ public interface StudentService {
 
     Collection<Student> getLastStudents(Integer num);
 
-    List<String> getLetterStudents(String letter);
+    List<String> findAllStartsWith(String letter);
 
     int getTestValue();
 }

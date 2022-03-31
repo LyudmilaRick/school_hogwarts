@@ -112,8 +112,8 @@ public class StudentController {
      * @return Collection<Student>
      */
     @GetMapping("/name-letter/{letter}")
-    public List<String> getLetterStudents(@PathVariable String letter) {
-        return studentService.getLetterStudents(letter);
+    public List<String> findAllStartsWith(@PathVariable String letter) {
+        return studentService.findAllStartsWith(letter);
     }
 
     /**
