@@ -2,10 +2,7 @@ package ru.hogwarts.rick.school_hogwarts.model;
 
 import java.util.Collection;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  * Faculty имеет следующие поля: Long id, String name, String color.
@@ -21,7 +18,8 @@ public class Faculty {
     private String name;
     private String color;
 
-    @OneToMany(mappedBy = "faculty")
+   // @OneToMany(fetch = FetchType.EAGER)(mappedBy = "faculty")
+    @OneToMany(fetch = FetchType.EAGER)
     private Collection<Student> student;
 
     public Faculty(Long id, String name, String color) {

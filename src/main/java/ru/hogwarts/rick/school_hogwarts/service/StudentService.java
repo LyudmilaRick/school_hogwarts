@@ -29,4 +29,8 @@ public interface StudentService {
     List<String> findAllStartsWith(String letter);
 
     int getTestValue();
+
+    void printStudents();
+
+    void printStudentsSynchronized();
 }
