@@ -125,4 +125,22 @@ public class StudentController {
     public int getTestValue() {
         return studentService.getTestValue();
     }
+
+    /**
+     * flag - 1 - поток синхронный
+     * Создан эндпоинт, который запускает два параллельных потока
+     * для вывода имен студентов в консоль
+     * Создан эндпоинт, который запускает два синхронизированных параллельных потока
+     * для вывода имен студентов в консоль.
+     */
+    @GetMapping("/test-thread")
+    public String printStudents(@RequestParam  int flag) {
+        if (flag == 1) {
+            studentService.printStudentsSynchronized();
+            return "Тесг синхронизированных параллельных потоков";
+        } else {
+            studentService.printStudents();
+            return "Тесг  параллельных потоков";
+        }
+    }
 }

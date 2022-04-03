@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-
-    Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+    // private final Object flag   = new Object();
+    private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     private final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
@@ -172,6 +172,68 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Time after upgrading - " + finishTime);
 
         return sum;
+    }
+
+    /**
+     * В методе сервиса необходимо получить список всех студентов
+     * вывести их имена в консоль используя команду System.out.println().
+     * При этом первые два имени вывести в основном потоке, второе и третье в параллельном потоке.
+     * А пятое и шестое во втором параллельном потоке.
+     */
+    @Override
+    public void printStudents() {
+        List<Student> students = studentRepository.findAll();
+
+        new Thread(() -> {
+            for (int i = 3; i < students.size() - 1; i = i + 4) {
+                printOneStudent(students.get(i).getName(), 1);
+                printOneStudent(students.get(i + 1).getName(), 1);
+            }
+        }).start();
+
+        new Thread(() -> {
+            for (int i = 5; i < students.size() - 1; i = i + 4) {
+                printOneStudent(students.get(i).getName(), 2);
+                printOneStudent(students.get(i + 1).getName(), 2);
+            }
+        }).start();
+
+        System.out.println(students.get(1).getName());
+        System.out.println(students.get(2).getName());
+    }
+
+    /**
+     * вывод имени в консоль вынести в отдельный синхронизированный метод.
+     */
+    @Override
+    public void printStudentsSynchronized() {
+
+        List<Student> students = studentRepository.findAll();
+
+        new Thread(() -> {
+            for (int i = 3; i < students.size() - 1; i = i + 4) {
+                printOneStudentSynchronized(students.get(i).getName(), 1);
+                printOneStudentSynchronized(students.get(i + 1).getName(), 1);
+            }
+        }).start();
+
+        new Thread(() -> {
+            for (int i = 5; i < students.size() - 1; i = i + 4) {
+                printOneStudentSynchronized(students.get(i).getName(), 2);
+                printOneStudentSynchronized(students.get(i + 1).getName(), 2);
+            }
+        }).start();
+
+        System.out.println(students.get(1).getName());
+        System.out.println(students.get(2).getName());
+    }
+
+    private void printOneStudent(String item, int thread) {
+        System.out.println(item + " Thread - " + thread);
+    }
+
+    private synchronized void printOneStudentSynchronized(String item, int thread) {
+        System.out.println(item + " Thread - " + thread);
     }
 }
 
