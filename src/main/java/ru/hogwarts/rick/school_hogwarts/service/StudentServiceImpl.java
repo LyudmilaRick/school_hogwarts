@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    public final Object flag = new Object();
+    // private final Object flag   = new Object();
     private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     private final StudentRepository studentRepository;
 
@@ -183,8 +183,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void printStudents() {
         List<Student> students = studentRepository.findAll();
-        System.out.println(students.get(1).getName());
-        System.out.println(students.get(2).getName());
 
         new Thread(() -> {
             for (int i = 3; i < students.size() - 1; i = i + 4) {
@@ -199,6 +197,9 @@ public class StudentServiceImpl implements StudentService {
                 printOneStudent(students.get(i + 1).getName(), 2);
             }
         }).start();
+
+        System.out.println(students.get(1).getName());
+        System.out.println(students.get(2).getName());
     }
 
     /**
@@ -208,8 +209,6 @@ public class StudentServiceImpl implements StudentService {
     public void printStudentsSynchronized() {
 
         List<Student> students = studentRepository.findAll();
-        System.out.println(students.get(1).getName());
-        System.out.println(students.get(2).getName());
 
         new Thread(() -> {
             for (int i = 3; i < students.size() - 1; i = i + 4) {
@@ -224,16 +223,17 @@ public class StudentServiceImpl implements StudentService {
                 printOneStudentSynchronized(students.get(i + 1).getName(), 2);
             }
         }).start();
+
+        System.out.println(students.get(1).getName());
+        System.out.println(students.get(2).getName());
     }
 
     private void printOneStudent(String item, int thread) {
         System.out.println(item + " Thread - " + thread);
     }
 
-    private void printOneStudentSynchronized(String item, int thread) {
-        synchronized (flag) {
-            System.out.println(item + " Thread - " + thread);
-        }
+    private synchronized void printOneStudentSynchronized(String item, int thread) {
+        System.out.println(item + " Thread - " + thread);
     }
 }
 

@@ -18,8 +18,7 @@ public class Faculty {
     private String name;
     private String color;
 
-   // @OneToMany(fetch = FetchType.EAGER)(mappedBy = "faculty")
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "faculty")
     private Collection<Student> student;
 
     public Faculty(Long id, String name, String color) {

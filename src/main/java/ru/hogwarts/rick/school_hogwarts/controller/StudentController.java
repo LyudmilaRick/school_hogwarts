@@ -133,8 +133,8 @@ public class StudentController {
      * Создан эндпоинт, который запускает два синхронизированных параллельных потока
      * для вывода имен студентов в консоль.
      */
-    @GetMapping("/test-thread{flag}")
-    public String printStudents(@PathVariable int flag) {
+    @GetMapping("/test-thread")
+    public String printStudents(@RequestParam  int flag) {
         if (flag == 1) {
             studentService.printStudentsSynchronized();
             return "Тесг синхронизированных параллельных потоков";
